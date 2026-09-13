@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Notifications - SkillSync</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #222;
+        }
+
+        .navbar {
+            background: #ffffff;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4f46e5;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #4f46e5;
+        }
+
+        .logout {
+            color: #e11d48 !important;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 850px;
+            margin: 40px auto;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+        }
+
+        .notification {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .notification a {
+            text-decoration: none;
+            color: #222;
+        }
+
+        .notification a:hover {
+            color: #4f46e5;
+        }
+
+        .notification small {
+            color: #777;
+        }
+
+        .empty {
+            background: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .empty h2 {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        SkillSync
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{% url 'dashboard' %}">
+            Home
+        </a>
+
+        <a href="{% url 'search' %}">
+            Search
+        </a>
+
+        <a href="{% url 'messages' %}">
+            💬 Messages
+        </a>
+
+        <a href="{% url 'notifications' %}">
+            🔔 Notifications
+        </a>
+
+        <a href="{% url 'connections' %}">
+            👥 Connections
+        </a>
+
+        <a href="{% url 'logout' %}" class="logout">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+    <h1>🔔 Notifications</h1>
+
+    {% if notifications %}
+
+        {% for notification in notifications %}
+
+            <div class="notification">
+
+                {% if notification.notification_type == "message" %}
+
+                    <a href="{% url 'chat' notification.sender.username %}">
+
+                        💬
+                        <strong>{{ notification.sender.username }}</strong>
+                        sent you a message.
+
+                        {% if notification.message %}
+                            <br>
+                            <small>
+                                "{{ notification.message.content }}"
+                            </small>
+                        {% endif %}
+
+                    </a>
+
+                     {% elif notification.notification_type == "connection_request" %}
+
+                      <a href="{% url 'message_requests' %}">
+
+                                🤝
+                         <strong>{{ notification.sender.username }}</strong>
+                                sent you a connection request.
+
+                        </a>
+
+
+                     {% elif notification.notification_type == "connection_accepted" %}
+
+                       <a href="{% url 'chat' notification.sender.username %}">
+
+                               🎉
+                            <strong>{{ notification.sender.username }}</strong>
+                                  accepted your connection request.
+
+                        <br>
+ 
+                            <small>
+                                 Click here to start chatting.
+                             </small>
+
+                         </a>
+
+
+
+                {% endif %}
+
+                <br>
+
+                <small>
+                    {{ notification.created_at|date:"M d, Y h:i A" }}
+                </small>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+
+            <h2>✨ No notifications</h2>
+
+            <p>You're all caught up!</p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
+

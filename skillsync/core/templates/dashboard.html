@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - SkillSync</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 70px;
+            background: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 50px;
+
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: bold;
+            color: #4f46e5;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: #4f46e5;
+        }
+
+        .logout {
+            background: #ef4444;
+            color: white !important;
+
+            padding: 9px 16px;
+
+            border-radius: 8px;
+        }
+
+
+        /* MAIN CONTAINER */
+
+        .container {
+            max-width: 1200px;
+
+            margin: 35px auto;
+
+            padding: 0 25px;
+        }
+
+
+        /* WELCOME */
+
+        .welcome {
+            background: linear-gradient(
+                135deg,
+                #4f46e5,
+                #7c3aed
+            );
+
+            color: white;
+
+            padding: 35px;
+
+            border-radius: 18px;
+
+            margin-bottom: 30px;
+        }
+
+        .welcome h1 {
+            font-size: 30px;
+
+            margin-bottom: 10px;
+        }
+
+        .welcome p {
+            font-size: 16px;
+
+            opacity: 0.9;
+        }
+
+
+        /* SEARCH */
+
+        .search-box {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 15px;
+
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+
+            margin-bottom: 35px;
+        }
+
+        .search-box h2 {
+            margin-bottom: 15px;
+        }
+
+        .search {
+            display: flex;
+
+            gap: 10px;
+        }
+
+        .search input {
+            flex: 1;
+
+            padding: 14px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 9px;
+
+            font-size: 15px;
+        }
+
+        .search button {
+            padding: 14px 25px;
+
+            border: none;
+
+            background: #4f46e5;
+
+            color: white;
+
+            border-radius: 9px;
+
+            cursor: pointer;
+        }
+
+
+        /* SECTION TITLE */
+
+        .section-title {
+            margin-bottom: 18px;
+
+            font-size: 22px;
+        }
+
+
+        /* ACTION CARDS */
+
+        .cards {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 35px;
+        }
+
+        .card {
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.06);
+
+            transition: 0.2s;
+        }
+
+        .card:hover {
+
+            transform: translateY(-5px);
+
+        }
+
+        .icon {
+
+            font-size: 32px;
+
+            margin-bottom: 12px;
+        }
+
+        .card h3 {
+
+            margin-bottom: 8px;
+        }
+
+        .card p {
+
+            color: #6b7280;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            margin-bottom: 18px;
+        }
+
+        .card a {
+
+            text-decoration: none;
+
+            color: #4f46e5;
+
+            font-weight: bold;
+        }
+
+
+        /* TWO COLUMNS */
+
+        .two-column {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 25px;
+        }
+
+        .panel {
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .panel h2 {
+
+            margin-bottom: 20px;
+        }
+
+        .skill {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            padding: 13px 0;
+
+            border-bottom: 1px solid #eee;
+        }
+
+        .skill:last-child {
+
+            border-bottom: none;
+        }
+
+        .skill span {
+
+            color: #6b7280;
+
+            font-size: 14px;
+        }
+
+        .button {
+
+            display: inline-block;
+
+            margin-top: 15px;
+
+            padding: 11px 18px;
+
+            background: #4f46e5;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+        }
+
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+
+            .cards {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .two-column {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .navbar {
+
+                padding: 0 20px;
+            }
+
+            .nav-links {
+
+                gap: 10px;
+            }
+
+            .nav-links a:not(.logout) {
+
+                display: none;
+            }
+
+            .cards {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .welcome h1 {
+
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        SkillSync
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="{% url 'dashboard' %}">
+            Home
+        </a>
+
+        <a href="{% url 'search' %}">
+            Search
+        </a>
+
+        <a href="{% url 'messages' %}">
+            Messages
+        </a>
+
+        <a href="{% url 'notifications' %}">
+            🔔
+        </a>
+
+        <a
+            href="{% url 'logout' %}"
+            class="logout"
+        >
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- MAIN -->
+
+<main class="container">
+
+
+    <!-- WELCOME -->
+
+    <section class="welcome">
+
+        <h1>
+
+            Welcome,
+            {{ user.username }}
+            👋
+
+        </h1>
+
+        <p>
+
+            Connect, learn, share your skills
+            and build something amazing together.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- SEARCH -->
+
+    <section class="search-box">
+
+        <h2>
+
+            🔎 Find Skills & People
+
+        </h2>
+
+
+        <form 
+           class="search"
+           method="GET"
+           action="{% url 'search' %}"
+>
+
+          <input 
+              type="text"
+              name="q"
+              placeholder="Search Python, Django, UI/UX, Web Development..."
+              required
+          >
+
+          <button type="submit">
+               Search
+          </button>
+
+        </form>
+
+    </section>
+
+
+
+    <!-- ACTIONS -->
+
+    <h2 class="section-title">
+
+        What do you want to do?
+
+    </h2>
+
+
+    <section class="cards">
+
+
+        <!-- EXPLORE -->
+
+        <div class="card">
+
+            <div class="icon">
+                🔍
+            </div>
+
+            <h3>
+                Explore Skills
+            </h3>
+
+            <p>
+
+                Discover people who have
+                the skills you want to learn.
+
+            </p>
+
+            <a href="{% url 'search' %}">
+
+                Explore →
+
+            </a>
+
+        </div>
+
+
+
+        <!-- PROFILE -->
+
+        <div class="card">
+
+            <div class="icon">
+                👤
+            </div>
+
+            <h3>
+                My Profile
+            </h3>
+
+            <p>
+
+                Add your skills, interests
+                and information.
+
+            </p>
+
+            <a href="{% url 'profile' %}">
+
+                View Profile →
+
+            </a>
+
+        </div>
+
+
+
+        <!-- CONNECT -->
+
+        <div class="card">
+
+            <div class="icon">
+                🤝
+            </div>
+
+            <h3>
+                Connect
+            </h3>
+
+            <p>
+
+                Connect with students and
+                peers who share your interests.
+
+            </p>
+
+            <a href="{% url 'connections' %}">
+
+                Find People →
+
+            </a>
+
+        </div>
+
+
+
+        <!-- BUILD -->
+
+        <div class="card">
+
+            <div class="icon">
+                🚀
+            </div>
+
+            <h3>
+                Build Together
+            </h3>
+
+            <p>
+
+                Find teammates and collaborate
+                on exciting projects.
+
+            </p>
+
+            <a href="{% url 'build_together' %}">
+
+                Start Project →
+
+            </a>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- SKILLS -->
+
+<section class="two-column">
+
+    <!-- LEARN SKILLS -->
+
+    <div class="panel">
+
+        <h2>
+            📚 Skills I Want to Learn
+        </h2>
+
+        {% if learn_skills %}
+
+            {% for skill in learn_skills %}
+
+                <div class="skill">
+
+                    <strong>
+                        {{ skill.name }}
+                    </strong>
+
+                    <div>
+
+                        <span>
+                            Learning
+                        </span>
+
+                        <a
+                            href="{% url 'edit_skill' skill.id %}"
+                            style="margin-left: 10px; color: #4f46e5; text-decoration: none;"
+                        >
+                            ✏️
+                        </a>
+
+                        <form
+                            method="POST"
+                            action="{% url 'delete_skill' skill.id %}"
+                            style="display: inline;"
+                        >
+
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                onclick="return confirm('Are you sure you want to delete this skill?')"
+                                style="border: none; background: none; cursor: pointer; font-size: 15px;"
+                            >
+                                🗑️
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="skill">
+
+                <strong>
+                    No skills added yet.
+                </strong>
+
+            </div>
+
+        {% endif %}
+
+
+        <a
+            href="{% url 'add_skill' %}"
+            class="button"
+        >
+            ➕ Add Skill
+        </a>
+
+    </div>
+
+
+
+    <!-- TEACH SKILLS -->
+
+    <div class="panel">
+
+        <h2>
+            🧑‍🏫 Skills I Can Share
+        </h2>
+
+        {% if teach_skills %}
+
+            {% for skill in teach_skills %}
+
+                <div class="skill">
+
+                    <strong>
+                        {{ skill.name }}
+                    </strong>
+
+                    <div>
+
+                        <span>
+                            Can Teach
+                        </span>
+
+                        <a
+                            href="{% url 'edit_skill' skill.id %}"
+                            style="margin-left: 10px; color: #4f46e5; text-decoration: none;"
+                        >
+                            ✏️
+                        </a>
+
+                        <form
+                            method="POST"
+                            action="{% url 'delete_skill' skill.id %}"
+                            style="display: inline;"
+                        >
+
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                onclick="return confirm('Are you sure you want to delete this skill?')"
+                                style="border: none; background: none; cursor: pointer; font-size: 15px;"
+                            >
+                                🗑️
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="skill">
+
+                <strong>
+                    No skills added yet.
+                </strong>
+
+            </div>
+
+        {% endif %}
+
+
+        <a
+            href="{% url 'add_skill' %}"
+            class="button"
+        >
+            ➕ Add Skill
+        </a>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+</body>
+
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Message Requests | SkillSync</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f6f7fb;
+            color: #1f2937;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 72px;
+            background: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 700;
+            color: #4f46e5;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #4f46e5;
+        }
+
+        .logout {
+            background: #ef4444;
+            color: white !important;
+
+            padding: 9px 17px;
+            border-radius: 8px;
+        }
+
+        /* MAIN */
+
+        .container {
+            max-width: 850px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+        .title {
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+
+        /* REQUEST CARD */
+
+        .request-card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 15px;
+
+            padding: 22px;
+
+            margin-bottom: 15px;
+
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .request-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-name {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .username {
+            color: #6b7280;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .status {
+            color: #f59e0b;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .buttons {
+            margin-top: 18px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+
+            padding: 9px 18px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .accept {
+            background: #10b981;
+            color: white;
+        }
+
+        .accept:hover {
+            background: #059669;
+        }
+
+        .reject {
+            background: #ef4444;
+            color: white;
+        }
+
+        .reject:hover {
+            background: #dc2626;
+        }
+
+        .empty {
+            background: white;
+
+            padding: 35px;
+
+            text-align: center;
+
+            border-radius: 15px;
+
+            color: #6b7280;
+
+            border: 1px solid #e5e7eb;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        SkillSync
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{% url 'dashboard' %}">
+            Home
+        </a>
+
+        <a href="{% url 'search' %}">
+            Search
+        </a>
+
+        <a href="{% url 'messages' %}">
+            💬 Messages
+        </a>
+
+        <a href="{% url 'logout' %}" class="logout">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- MAIN -->
+
+<main class="container">
+
+    <h1 class="title">
+        💬 Message Requests
+    </h1>
+
+
+    {% if requests %}
+
+        {% for request in requests %}
+
+            <div class="request-card">
+
+                <div class="request-info">
+
+                    <div>
+
+                        <div class="user-name">
+
+                            {% if request.sender == user %}
+
+                                {{ request.receiver.username }}
+
+                            {% else %}
+
+                                {{ request.sender.username }}
+
+                            {% endif %}
+
+                        </div>
+
+                        <div class="username">
+                            wants to connect with you
+                        </div>
+
+                    </div>
+
+
+                    <div class="status">
+
+                        {{ request.status|title }}
+
+                    </div>
+
+                </div>
+
+
+                {% if request.status == "pending" %}
+
+                    <div class="buttons">
+
+                        <a
+                            href="{% url 'accept_message_request' request.id %}"
+                            class="btn accept"
+                        >
+                            ✓ Accept
+                        </a>
+
+
+                        <a
+                            href="{% url 'reject_message_request' request.id %}"
+                            class="btn reject"
+                        >
+                            ✕ Reject
+                        </a>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+
+            <h3>No message requests</h3>
+
+            <p>
+                You don't have any message requests yet.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+
+</main>
+
+
+</body>
+
+</html>

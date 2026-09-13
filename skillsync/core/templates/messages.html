@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Messages - SkillSync</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px;
+            font-family: Arial, sans-serif;
+            background: #f5f6fa;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+        }
+
+        .user-card {
+            background: white;
+            padding: 18px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow:
+                0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .username {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .message-btn {
+            text-decoration: none;
+            background: #333;
+            color: white;
+
+            padding: 9px 15px;
+            border-radius: 8px;
+        }
+
+        .message-btn:hover {
+            opacity: 0.8;
+        }
+
+        .empty {
+            text-align: center;
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <h1>💬 Messages</h1>
+
+
+    {% if conversation_users %}
+
+        {% for message_user in conversation_users %}
+
+            <div class="user-card">
+
+                <div class="username">
+
+                    👤 {{ message_user.username }}
+
+                </div>
+
+
+                <a
+                    class="message-btn"
+                    href="{% url 'chat' message_user.username %}"
+                >
+
+                    Open Chat
+
+                </a>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+
+            <h2>💬 No messages yet</h2>
+
+            <p>
+                Start a conversation with another student.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+
+</html>

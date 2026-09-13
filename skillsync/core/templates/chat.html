@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chat with {{ other_user.username }} | SkillSync</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 70px;
+            background: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #4f46e5;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #4f46e5;
+        }
+
+        .logout {
+            background: #ef4444;
+            color: white !important;
+            padding: 9px 16px;
+            border-radius: 8px;
+        }
+
+        /* CHAT CONTAINER */
+
+        .chat-container {
+            max-width: 850px;
+            height: 75vh;
+
+            margin: 35px auto;
+
+            background: white;
+
+            border-radius: 18px;
+
+            border: 1px solid #e5e7eb;
+
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+
+            display: flex;
+            flex-direction: column;
+
+            overflow: hidden;
+        }
+
+        /* CHAT HEADER */
+
+        .chat-header {
+            padding: 20px 25px;
+
+            border-bottom: 1px solid #e5e7eb;
+
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+
+            border-radius: 50%;
+
+            background: #eef2ff;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 22px;
+        }
+
+        .chat-header h2 {
+            font-size: 18px;
+        }
+
+        .chat-header p {
+            color: #9ca3af;
+            font-size: 13px;
+
+            margin-top: 3px;
+        }
+
+        /* MESSAGES */
+
+        .messages {
+            flex: 1;
+
+            padding: 25px;
+
+            overflow-y: auto;
+
+            background: #fafbff;
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 12px;
+        }
+
+        .message {
+            max-width: 65%;
+
+            padding: 11px 15px;
+
+            border-radius: 15px;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            word-wrap: break-word;
+        }
+
+        .sent {
+            align-self: flex-end;
+
+            background: #4f46e5;
+
+            color: white;
+
+            border-bottom-right-radius: 4px;
+        }
+
+        .received {
+            align-self: flex-start;
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            color: #374151;
+
+            border-bottom-left-radius: 4px;
+        }
+
+        .message-time {
+            display: block;
+
+            font-size: 10px;
+
+            margin-top: 5px;
+
+            opacity: 0.65;
+        }
+
+        .empty-chat {
+            margin: auto;
+
+            text-align: center;
+
+            color: #9ca3af;
+        }
+
+        .empty-chat h3 {
+            margin-bottom: 8px;
+
+            color: #6b7280;
+        }
+
+        /* MESSAGE FORM */
+
+        .message-form {
+            padding: 18px;
+
+            border-top: 1px solid #e5e7eb;
+
+            display: flex;
+
+            gap: 10px;
+
+            background: white;
+        }
+
+        .message-input {
+            flex: 1;
+
+            padding: 13px 16px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 10px;
+
+            outline: none;
+
+            font-size: 14px;
+        }
+
+        .message-input:focus {
+            border-color: #4f46e5;
+        }
+
+        .send-btn {
+            border: none;
+
+            background: #4f46e5;
+
+            color: white;
+
+            padding: 0 22px;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+        }
+
+        .send-btn:hover {
+            background: #4338ca;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .chat-container {
+                margin: 20px 12px;
+
+                height: 78vh;
+
+                border-radius: 14px;
+            }
+
+            .message {
+                max-width: 80%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        SkillSync
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{% url 'dashboard' %}">
+            Home
+        </a>
+
+        <a href="{% url 'search' %}">
+            Search
+        </a>
+
+        <a href="{% url 'profile' %}">
+            Profile
+        </a>
+
+        <a href="{% url 'logout' %}" class="logout">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- CHAT -->
+
+<main class="chat-container">
+
+
+    <!-- HEADER -->
+
+    <div class="chat-header">
+
+        <div class="avatar">
+            👤
+        </div>
+
+        <div>
+
+            <h2>
+                {{ other_user.username }}
+            </h2>
+
+            <p>
+                SkillSync member
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- MESSAGES -->
+
+    <div class="messages">
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                {% if message.sender == request.user %}
+
+                    <div class="message sent">
+
+                        {{ message.content }}
+
+                        <span class="message-time">
+                            {{ message.created_at|date:"h:i A" }}
+                        </span>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="message received">
+
+                        {{ message.content }}
+
+                        <span class="message-time">
+                            {{ message.created_at|date:"h:i A" }}
+                        </span>
+
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-chat">
+
+                <h3>
+                    👋 Start a conversation
+                </h3>
+
+                <p>
+                    Send a message to {{ other_user.username }}
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- SEND MESSAGE -->
+
+    <form
+        method="POST"
+        class="message-form"
+    >
+
+        {% csrf_token %}
+
+        <input
+            type="text"
+            name="content"
+            class="message-input"
+            placeholder="Type your message..."
+            autocomplete="off"
+            required
+        >
+
+        <button
+            type="submit"
+            class="send-btn"
+        >
+            Send ➤
+        </button>
+
+    </form>
+
+
+</main>
+
+
+</body>
+
+</html>

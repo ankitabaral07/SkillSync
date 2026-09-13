@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ profile_user.username }} | SkillSync</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f6f7fb;
+            color: #1f2937;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 72px;
+            background: #ffffff;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 700;
+            color: #4f46e5;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #6b7280;
+            font-size: 14px;
+            font-weight: 500;
+
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #4f46e5;
+        }
+
+        .logout {
+            background: #ef4444;
+            color: white !important;
+
+            padding: 9px 17px;
+            border-radius: 8px;
+        }
+
+        .logout:hover {
+            background: #dc2626;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .container {
+            max-width: 950px;
+            margin: 45px auto;
+            padding: 0 25px;
+        }
+
+
+        /* ================= PROFILE CARD ================= */
+
+        .profile-card {
+            background: white;
+
+            border-radius: 20px;
+
+            border: 1px solid #e5e7eb;
+
+            overflow: hidden;
+
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+        }
+
+
+        /* ================= COVER ================= */
+
+        .cover {
+            height: 150px;
+
+            background: linear-gradient(
+                135deg,
+                #4f46e5,
+                #7c3aed,
+                #9333ea
+            );
+        }
+
+
+        /* ================= PROFILE HEADER ================= */
+
+        .profile-header {
+            text-align: center;
+
+            padding: 0 30px 30px;
+
+            position: relative;
+        }
+
+        .profile-picture-container {
+            margin-top: -55px;
+            margin-bottom: 15px;
+        }
+
+        .profile-image,
+        .default-image {
+
+            width: 110px;
+            height: 110px;
+
+            border-radius: 50%;
+
+            border: 5px solid white;
+
+            box-shadow: 0 5px 18px rgba(0,0,0,0.12);
+        }
+
+        .profile-image {
+            object-fit: cover;
+        }
+
+        .default-image {
+
+            background: #eef2ff;
+
+            color: #4f46e5;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 42px;
+
+            margin: auto;
+        }
+
+        .profile-header h1 {
+            font-size: 27px;
+            margin-bottom: 7px;
+        }
+
+        .username {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+
+        /* ================= CONTENT ================= */
+
+        .profile-content {
+
+            padding: 0 40px 35px;
+
+        }
+
+        .section {
+
+            padding: 25px 0;
+
+            border-top: 1px solid #eef0f4;
+        }
+
+        .section h2 {
+
+            font-size: 17px;
+
+            margin-bottom: 12px;
+
+            color: #111827;
+        }
+
+        .section p {
+
+            color: #6b7280;
+
+            line-height: 1.7;
+
+            font-size: 15px;
+        }
+
+
+        /* ================= SKILLS ================= */
+
+        .skills {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+        }
+
+        .skill {
+
+            background: #eef2ff;
+
+            color: #4f46e5;
+
+            padding: 8px 14px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            border: 1px solid #e0e7ff;
+        }
+
+        .no-skill {
+
+            color: #9ca3af;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= ACTIONS ================= */
+
+        .actions {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 12px;
+
+            margin-top: 10px;
+        }
+         
+        .message-btn {
+            text-decoration: none;
+            background: #10b981;
+            color: white;
+
+            padding: 11px 22px;
+            border-radius: 9px;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+       .message-btn:hover {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+        
+
+        .back-btn {
+
+            text-decoration: none;
+
+            background: #4f46e5;
+
+            color: white;
+
+            padding: 11px 22px;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+        .back-btn:hover {
+
+            background: #4338ca;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 650px) {
+
+            .navbar {
+
+                padding: 0 20px;
+
+            }
+
+            .nav-links {
+
+                gap: 12px;
+
+            }
+
+            .nav-links a {
+
+                font-size: 12px;
+
+            }
+
+            .logout {
+
+                padding: 8px 11px;
+
+            }
+
+            .container {
+
+                margin: 25px auto;
+
+                padding: 0 15px;
+
+            }
+
+            .cover {
+
+                height: 120px;
+
+            }
+
+            .profile-content {
+
+                padding: 0 22px 25px;
+
+            }
+
+            .profile-header h1 {
+
+                font-size: 23px;
+
+            }
+
+        }
+
+        .block-btn {
+    border: none;
+    background: #ef4444;
+    color: white;
+    padding: 11px 22px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.block-btn:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+}
+
+.block-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 11px 22px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        SkillSync
+    </div>
+
+    <div class="nav-links"> 
+ 
+    <a href="{% url 'dashboard' %}"> 
+        Home 
+    </a> 
+ 
+    <a href="{% url 'search' %}"> 
+        Search 
+    </a> 
+ 
+    <a href="{% url 'messages' %}"> 
+        💬 Messages 
+    </a> 
+ 
+    <a href="{% url 'notifications' %}"> 
+        🔔 Notifications 
+    </a> 
+ 
+    <a href="{% url 'connections' %}"> 
+        👥 Connections 
+    </a> 
+ 
+    <a href="{% url 'logout' %}" class="logout"> 
+        Logout 
+    </a> 
+ 
+</div>
+
+</nav>
+
+
+
+<!-- ================= PROFILE ================= -->
+
+<main class="container">
+
+    <div class="profile-card">
+
+
+        <!-- COVER -->
+
+        <div class="cover"></div>
+
+
+        <!-- PROFILE HEADER -->
+
+        <div class="profile-header">
+
+            <div class="profile-picture-container">
+
+                {% if profile.profile_image %}
+
+                    <img
+                        src="{{ profile.profile_image.url }}"
+                        class="profile-image"
+                        alt="Profile Picture"
+                    >
+
+                {% else %}
+
+                    <div class="default-image">
+                        👤
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <h1>
+                {{ profile_user.username }}
+            </h1>
+
+            <p class="username">
+                {{ profile_user.email }}
+            </p>
+
+        </div>
+
+
+
+        <!-- CONTENT -->
+
+        <div class="profile-content">
+
+
+            <!-- ABOUT -->
+
+            <div class="section">
+
+                <h2>
+                    About Me
+                </h2>
+
+                {% if profile.bio %}
+
+                    <p>
+                        {{ profile.bio }}
+                    </p>
+
+                {% else %}
+
+                    <p>
+                        No bio added yet.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+
+
+            <!-- TEACH -->
+
+            <div class="section">
+
+                <h2>
+                    🎓 Skills I Can Teach
+                </h2>
+
+                <div class="skills">
+
+                    {% if teach_skills %}
+
+                        {% for skill in teach_skills %}
+
+                            <span class="skill">
+                                {{ skill.name }}
+                            </span>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <span class="no-skill">
+                            No teaching skills added yet.
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+
+            <!-- LEARN -->
+
+            <div class="section">
+
+                <h2>
+                    📚 Skills I Want to Learn
+                </h2>
+
+                <div class="skills">
+
+                    {% if learn_skills %}
+
+                        {% for skill in learn_skills %}
+
+                            <span class="skill">
+                                {{ skill.name }}
+                            </span>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <span class="no-skill">
+                            No learning skills added yet.
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+
+            <!-- BUTTON -->
+
+            <div class="actions">
+
+            {% if profile_user != user %}
+
+   {% if connection_status == "connected" %}
+
+    <!-- MESSAGE -->
+    <a
+        href="{% url 'chat' profile_user.username %}"
+        class="message-btn"
+    >
+        💬 Message
+    </a>
+
+    <!-- UNFRIEND -->
+    <form
+        method="POST"
+        action="{% url 'unfriend_user' profile_user.username %}"
+        style="display: inline;"
+    >
+        {% csrf_token %}
+
+        <button
+            type="submit"
+            class="back-btn"
+            onclick="return confirm('Are you sure you want to unfriend this user?')"
+        >
+            👤 Unfriend
+        </button>
+    </form>
+
+    <!-- BLOCK -->
+    <form
+        method="POST"
+        action="{% url 'block_user' profile_user.username %}"
+        style="display: inline;"
+    >
+        {% csrf_token %}
+
+        <button
+            type="submit"
+            class="block-btn"
+            onclick="return confirm('Are you sure you want to block this user?')"
+        >
+            🚫 Block
+        </button>
+    </form>
+
+    {% elif connection_status == "blocked" %}
+
+<form
+    method="POST"
+    action="{% url 'unblock_user' profile_user.username %}"
+    style="display: inline;"
+>
+    {% csrf_token %}
+
+    <button
+        type="submit"
+        class="message-btn"
+        onclick="return confirm('Are you sure you want to unblock this user?')"
+    >
+        🔓 Unblock
+    </button>
+</form>
+
+    {% elif connection_status == "sent" %}
+
+        <span class="message-btn disabled">
+            ✓ Request Sent
+        </span>
+
+    {% elif connection_status == "received" %}
+
+        <a href="{% url 'accept_message_request' connection_request.id %}"
+           class="message-btn">
+            ✓ Accept Request
+        </a>
+
+        <a href="{% url 'reject_message_request' connection_request.id %}"
+           class="back-btn">
+            ✕ Reject
+        </a>
+
+     {% else %}
+
+        <a
+            href="{% url 'send_message_request' profile_user.username %}"
+            class="message-btn">
+            🤝 Connect
+        </a>
+
+    {% endif %}
+
+  {% endif %}
+
+
+            
+
+             <a
+               href="{% url 'search' %}"
+               class="back-btn"
+             >
+                 ← Back to Search
+               </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+</body>
+
+</html>
