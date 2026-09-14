@@ -5,47 +5,136 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Sign Up - SkillSync</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        .signup-card {
+            background: #fff;
+            width: 100%;
+            max-width: 400px;
+            padding: 36px 32px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 22px;
+            text-align: center;
+            color: #1f2937;
+            margin-bottom: 24px;
+        }
+
+        .error-msg {
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 18px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4f46e5;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #4338ca;
+        }
+
+        .login-link {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            font-size: 14px;
+            color: #4f46e5;
+            text-decoration: none;
+        }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1>Create your SkillSync account</h1>
+    <div class="signup-card">
 
-    {% if error %}
-        <p style="color: red;">{{ error }}</p>
-    {% endif %}
+        <h1>Create your SkillSync account</h1>
 
-    <form method="POST">
+        {% if error %}
+            <p class="error-msg">{{ error }}</p>
+        {% endif %}
 
-        {% csrf_token %}
+        <form method="POST">
 
-        <label>Username</label>
-        <input type="text" name="username" required>
+            {% csrf_token %}
 
-        <br><br>
+            <label>Username</label>
+            <input type="text" name="username" required>
 
-        <label>Email</label>
-        <input type="email" name="email" required>
+            <label>Email</label>
+            <input type="email" name="email" required>
 
-        <br><br>
+            <label>Password</label>
+            <input type="password" name="password" required>
 
-        <label>Password</label>
-        <input type="password" name="password" required>
+            <label>Confirm Password</label>
+            <input type="password" name="confirm_password" required>
 
-        <br><br>
+            <button type="submit">Create Account</button>
 
-        <label>Confirm Password</label>
-        <input type="password" name="confirm_password" required>
+        </form>
 
-        <br><br>
+        <a href="{% url 'login' %}" class="login-link">Already have an account? Login</a>
 
-        <button type="submit">Create Account</button>
-
-    </form>
-
-    <br>
-
-    <a href="{% url 'login' %}">Already have an account? Login</a>
+    </div>
 
 </body>
 </html>
